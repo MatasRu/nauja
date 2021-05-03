@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/main')
+const middle = require(`../middle/middle`)
 
-router.post('/create', (req, res) => controller.createUser(req, res))
-router.get('/findUser/:username', (req, res) => controller.findUser(req, res))
-router.post('/update', (req, res) => controller.updateUser(req, res))
+router.post('/createRecipe', middle, controller.createRecipe)
+// router.get('/findUser/:username', (req, res) => controller.findUser(req, res))
+// router.post('/update', (req, res) => controller.updateUser(req, res))
 
 module.exports = router
