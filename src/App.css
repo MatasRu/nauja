@@ -134,3 +134,9 @@ img {
   height: 100px;
   margin-bottom: 20px;
 }
+
+.error{
+  color: red;
+  font-size: 13px;
+  margin-top: 20px;
+}

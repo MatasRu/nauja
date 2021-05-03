@@ -12,6 +12,7 @@ function Upload() {
     const [getIngredient, setIngredient] = useState("")
     const [getImage, setImage] = useState("")
     const [getPreperation, setPreperation] = useState("")
+    const [getError, setError] = useState("")
 
     let options = {
         method: "POST",
@@ -26,7 +27,6 @@ function Upload() {
         const stateObject = getRecipe
         stateObject[id] = value
         setRecipe({...stateObject})
-        console.log(getRecipe)
     }
 
     function addImage() {
@@ -58,7 +58,16 @@ function Upload() {
         fetch("http://localhost:3001/createRecipe", options)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                if(data.error) {
+                    setError(data.message)
+                }else{
+                    setRecipe({
+                        title: '',
+                        images: [],
+                        ingredients: [],
+                        preparation: []
+                    })
+                }
             })
     }
 
@@ -67,7 +76,7 @@ function Upload() {
         <div className="d-flex flex-center">
             <div className="upload-main-box">
                 <div className="upload-input-box flex-center">
-                    <input type="text" id="title" placeholder="Title" onChange={(e) => fill(e)}/>
+                    <input type="text" id="title" value={getRecipe.title} placeholder="Title" onChange={(e) => fill(e)}/>
                     <input type="text" id="image" value={getImage} placeholder="Image"
                            onChange={(e) => setImage(e.target.value)}/>
                     <button onClick={addImage}>Add more</button>
@@ -101,6 +110,8 @@ function Upload() {
                     </div>
 
                     <button onClick={uploadDatabase}>Add RECIPE</button>
+
+                    <span className="error">{getError}</span>
 
                 </div>
 
